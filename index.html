@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>BeautySlot — Smart Beauty Parlour Booking Platform</title>
   <meta name="description" content="Book beauty parlour appointments online. Choose salons, services, slots, or request home beauty services. Skip the queue with BeautySlot.">
+  
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#7C3AED">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BeautySlot">
+  
+  <!-- App Icons -->
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,10 +65,22 @@
             </a>
           </li>
         </ul>
+        <button type="button" class="btn btn-outline btn-install-nav" id="pwaInstallNavBtn" style="display: none;">📲 Install App</button>
         <a href="#booking" class="btn btn-primary nav-cta">⚡ Instant Booking</a>
       </nav>
     </div>
   </header>
+
+  <!-- Offline Alert Banner -->
+  <div class="offline-alert-banner" id="offlineAlertBanner" style="display: none;" role="status">
+    <div class="container offline-banner-flex">
+      <div class="offline-banner-text">
+        <span class="offline-pulse-dot"></span>
+        <span><strong>Offline Mode:</strong> Browsing cached data. Real-time slot booking and cancellations require an active internet connection.</span>
+      </div>
+      <button type="button" class="offline-banner-btn" id="offlineBannerRetryBtn">Check Network 🔄</button>
+    </div>
+  </div>
 
   <main>
     <!-- Hero Section -->
@@ -429,6 +456,23 @@
       </div>
     </div>
   </footer>
+
+  <!-- Android & Mobile PWA Install Floating Prompt -->
+  <aside class="pwa-install-prompt" id="pwaInstallPrompt" style="display: none;" aria-label="Install App Prompt">
+    <div class="pwa-prompt-body">
+      <div class="pwa-prompt-icon">
+        <img src="icons/icon-192.png" alt="BeautySlot App Icon" width="48" height="48">
+      </div>
+      <div class="pwa-prompt-info">
+        <h4>Install BeautySlot</h4>
+        <p>Add to your home screen for instant booking & quick access.</p>
+      </div>
+    </div>
+    <div class="pwa-prompt-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="pwaInstallConfirmBtn">Install App</button>
+      <button type="button" class="pwa-prompt-close" id="pwaInstallCloseBtn" aria-label="Close install prompt">&times;</button>
+    </div>
+  </aside>
 
   <script src="script.js"></script>
 </body>

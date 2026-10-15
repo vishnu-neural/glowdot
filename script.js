@@ -544,6 +544,12 @@ function handleBookingSubmit(event) {
     return;
   }
 
+  // Live Data Protection: Disallow offline bookings to prevent stale slot conflicts
+  if (!navigator.onLine) {
+    showToast("⚠️ You are currently offline. Real-time slot booking requires an active internet connection to prevent double booking.", "warning");
+    return;
+  }
+
   // Duplicate Slot Check
   const bookings = getStoredBookings();
   const isDuplicate = bookings.some(b => 
@@ -605,6 +611,11 @@ function handleBookingSubmit(event) {
 }
 
 window.cancelAppointment = function(bookingId) {
+  if (!navigator.onLine) {
+    showToast("⚠️ You are currently offline. Cancellation requires an active connection to release slots in real time.", "warning");
+    return;
+  }
+
   if (!confirm(`Are you sure you want to cancel appointment ${bookingId}? The slot will become available for others.`)) {
     return;
   }
@@ -696,9 +707,9 @@ function showToast(message, type = "info") {
   if (!container) return;
 
   const toast = document.createElement("div");
-  toast.className = `toast ${type === 'error' ? 'toast-error' : type === 'success' ? 'toast-success' : ''}`;
+  toast.className = `toast ${type === 'error' ? 'toast-error' : type === 'success' ? 'toast-success' : type === 'warning' ? 'toast-warning' : ''}`;
   toast.innerHTML = `
-    <span>${type === 'error' ? '⚠️' : type === 'success' ? '✅' : 'ℹ️'}</span>
+    <span>${type === 'error' ? '⚠️' : type === 'success' ? '✅' : type === 'warning' ? '🔔' : 'ℹ️'}</span>
     <div>${escapeHtml(message)}</div>
   `;
 
@@ -957,4 +968,143 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
     });
   }
+
+  // ==========================================
+  // 12. PWA SERVICE WORKER & INSTALL PROMPT
+  // ==========================================
+  initPwaFeatures();
 });
+
+// PWA Module: Service Worker registration, Install Prompts, and Offline Detection
+function initPwaFeatures() {
+  // A. Register Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => {
+          console.log('[PWA] Service Worker registered with scope:', reg.scope);
+
+          // Listen for new service worker installation
+          reg.addEventListener('updatefound', () => {
+            const installingWorker = reg.installing;
+            if (installingWorker) {
+              installingWorker.addEventListener('statechange', () => {
+                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  showToast('✨ An updated version of BeautySlot is ready. Refresh anytime for updates.', 'info');
+                }
+              });
+            }
+          });
+        })
+        .catch(err => {
+          console.error('[PWA] Service Worker registration failed:', err);
+        });
+    });
+  }
+
+  // B. Add to Home Screen (A2HS) Prompt Handling
+  let deferredPrompt = null;
+  const pwaInstallPrompt = document.getElementById('pwaInstallPrompt');
+  const pwaInstallConfirmBtn = document.getElementById('pwaInstallConfirmBtn');
+  const pwaInstallNavBtn = document.getElementById('pwaInstallNavBtn');
+  const pwaInstallCloseBtn = document.getElementById('pwaInstallCloseBtn');
+
+  window.addEventListener('beforeinstallprompt', e => {
+    // Prevent default mini-infobar on mobile devices
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Show nav install button
+    if (pwaInstallNavBtn) {
+      pwaInstallNavBtn.style.display = 'inline-flex';
+    }
+
+    // Show floating prompt if not previously dismissed this session
+    const isDismissed = sessionStorage.getItem('beautyslot_pwa_dismissed');
+    if (pwaInstallPrompt && !isDismissed) {
+      pwaInstallPrompt.style.display = 'flex';
+    }
+  });
+
+  function triggerPwaInstall() {
+    if (!deferredPrompt) {
+      showToast('Install prompt is ready in your browser menu (Add to Home screen).', 'info');
+      return;
+    }
+
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(choiceResult => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('[PWA] User accepted the installation');
+      } else {
+        console.log('[PWA] User dismissed the installation');
+      }
+      deferredPrompt = null;
+      if (pwaInstallPrompt) pwaInstallPrompt.style.display = 'none';
+      if (pwaInstallNavBtn) pwaInstallNavBtn.style.display = 'none';
+    });
+  }
+
+  if (pwaInstallConfirmBtn) {
+    pwaInstallConfirmBtn.addEventListener('click', triggerPwaInstall);
+  }
+  if (pwaInstallNavBtn) {
+    pwaInstallNavBtn.addEventListener('click', triggerPwaInstall);
+  }
+
+  if (pwaInstallCloseBtn) {
+    pwaInstallCloseBtn.addEventListener('click', () => {
+      if (pwaInstallPrompt) pwaInstallPrompt.style.display = 'none';
+      sessionStorage.setItem('beautyslot_pwa_dismissed', 'true');
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    console.log('[PWA] BeautySlot installed successfully');
+    showToast('🎉 BeautySlot installed! Launch anytime from your home screen.', 'success');
+    if (pwaInstallPrompt) pwaInstallPrompt.style.display = 'none';
+    if (pwaInstallNavBtn) pwaInstallNavBtn.style.display = 'none';
+    deferredPrompt = null;
+  });
+
+  // C. Online / Offline Real-time Connectivity Management
+  const offlineAlertBanner = document.getElementById('offlineAlertBanner');
+  const offlineBannerRetryBtn = document.getElementById('offlineBannerRetryBtn');
+
+  function updateNetworkStatus() {
+    if (!offlineAlertBanner) return;
+    if (!navigator.onLine) {
+      offlineAlertBanner.style.display = 'block';
+      showToast('⚠️ Offline Mode: Live booking & cancellation require internet.', 'warning');
+    } else {
+      if (offlineAlertBanner.style.display === 'block') {
+        showToast('✨ Internet restored! Real-time booking is available.', 'success');
+      }
+      offlineAlertBanner.style.display = 'none';
+    }
+  }
+
+  window.addEventListener('online', updateNetworkStatus);
+  window.addEventListener('offline', updateNetworkStatus);
+
+  if (offlineBannerRetryBtn) {
+    offlineBannerRetryBtn.addEventListener('click', () => {
+      offlineBannerRetryBtn.textContent = 'Checking...';
+      fetch('./manifest.webmanifest?t=' + Date.now(), { cache: 'no-store' })
+        .then(() => {
+          offlineBannerRetryBtn.textContent = 'Connected!';
+          updateNetworkStatus();
+        })
+        .catch(() => {
+          offlineBannerRetryBtn.textContent = 'Check Network 🔄';
+          showToast('Still offline. Please check your WiFi or mobile data.', 'error');
+        });
+    });
+  }
+
+  // Initial check on load
+  if (!navigator.onLine && offlineAlertBanner) {
+    offlineAlertBanner.style.display = 'block';
+  }
+}
+

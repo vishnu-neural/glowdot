@@ -1,0 +1,79 @@
+{
+  "name": "BeautySlot — Smart Beauty Parlour Booking",
+  "short_name": "BeautySlot",
+  "description": "Book verified beauty parlour slots and salon services online with zero waiting time.",
+  "id": "/?source=pwa",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#FAF8FF",
+  "theme_color": "#7C3AED",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["beauty", "lifestyle", "shopping", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Book",
+      "description": "Quickly book a beauty salon or home service slot",
+      "url": "./index.html#booking",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Find Salons",
+      "short_name": "Salons",
+      "description": "Discover top-rated beauty parlours nearby",
+      "url": "./index.html#salons",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Bookings",
+      "short_name": "Bookings",
+      "description": "View and manage your upcoming beauty appointments",
+      "url": "./index.html#my-bookings",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Services Menu",
+      "short_name": "Services",
+      "description": "Explore curated hair, skin, and bridal treatments",
+      "url": "./index.html#services",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
+}

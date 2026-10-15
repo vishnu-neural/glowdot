@@ -19,7 +19,10 @@ BeautySlot is a modern, responsive web platform designed to streamline salon app
   * Deluxe Spa Manicure
   * Relaxing Foot Pedicure
 * **📅 My Bookings Management**: Instant client-side persistence via `localStorage`, appointment tracking, status filters, and one-click cancellation (which automatically frees up the slot for others).
-* **📱 100% Responsive Design**: Aesthetic lavender and soft-pink palette optimized for mobile, tablet, and desktop screens.
+* **📱 Installable Progressive Web App (PWA)**: Complete W3C Web Manifest and Service Worker with Add to Home Screen (A2HS) support for Android devices.
+* **🛡️ Live Data & Double-Booking Protection**: Core static assets are cached offline, while live booking and cancellation requests are strictly verified online to prevent double-booking or stale slot assignments.
+* **📡 Branded Offline Fallback**: Custom offline fallback page (`offline.html`) and real-time connectivity status indicator.
+* **✨ 100% Mobile Responsive**: Tailored for Android screen sizes (down to 320px) with 44px+ touch targets and safe area insets.
 
 ---
 
@@ -27,14 +30,8 @@ BeautySlot is a modern, responsive web platform designed to streamline salon app
 
 No build tools or heavy dependencies required.
 
-### Option 1: Direct File Access
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/vishnu-neural/glowdot.git
-   ```
-2. Open `index.html` directly in any modern web browser.
-
-### Option 2: Local HTTP Server
+### Option 1: Local HTTP Server (Recommended for PWA testing)
+PWAs require a secure context (HTTPS or `localhost`).
 Using Node.js:
 ```bash
 npx serve .
@@ -44,6 +41,9 @@ Or with Python:
 python -m http.server 3000
 ```
 Then visit `http://localhost:3000`.
+
+### Option 2: Direct File Access
+Open `index.html` directly in modern web browsers (Note: Service Worker and PWA install prompt require HTTP/HTTPS).
 
 ---
 

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeautySlot — Smart Beauty Parlour Booking Platform</title>
+  <meta name="description" content="Book beauty parlour appointments online. Choose salons, services, slots, or request home beauty services. Skip the queue with BeautySlot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container announcement-content">
+      <span>✨ <strong>Demo Platform</strong>: Real-time slot management demo. Skip waiting queues with instant beauty bookings!</span>
+      <span class="badge-demo">Demo Mode</span>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="site-header" id="header">
+    <div class="container header-container">
+      <a href="#hero" class="brand-logo">
+        <div class="logo-icon">💄</div>
+        <div class="logo-text">
+          <span class="logo-name">Beauty<span class="highlight">Slot</span></span>
+          <span class="logo-tagline">Book Your Beauty. Skip the Queue.</span>
+        </div>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#salons" class="nav-link">Find Salons</a></li>
+          <li><a href="#booking" class="nav-link">Book Now</a></li>
+          <li>
+            <a href="#my-bookings" class="nav-link my-bookings-link">
+              My Bookings
+              <span class="bookings-badge" id="bookingsCountBadge">0</span>
+            </a>
+          </li>
+        </ul>
+        <a href="#booking" class="btn btn-primary nav-cta">⚡ Instant Booking</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-text-col">
+          <div class="pill-tag">🌸 Smart Parlour Appointments</div>
+          <h1 class="hero-title">Book Your Beauty.<br><span class="gradient-text">Skip the Queue.</span></h1>
+          <p class="hero-subtitle">
+            Reserve verified beauty parlour slots in seconds or request top-rated stylists right to your doorstep. Guaranteed zero waiting time.
+          </p>
+          
+          <!-- Hero Search Box -->
+          <div class="hero-search-card">
+            <div class="search-input-group">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="heroSearchInput" placeholder="Search by salon name, service, or city..." autocomplete="off">
+            </div>
+            <button type="button" class="btn btn-primary" id="heroSearchBtn">Search Salons</button>
+          </div>
+
+          <div class="hero-perks">
+            <div class="perk-item">
+              <span class="perk-icon">⏱️</span>
+              <span>Zero Wait Guarantee</span>
+            </div>
+            <div class="perk-item">
+              <span class="perk-icon">🏠</span>
+              <span>Home & Salon Visits</span>
+            </div>
+            <div class="perk-item">
+              <span class="perk-icon">⭐</span>
+              <span>Verified Top Stylists</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-col">
+          <div class="hero-card-stack">
+            <div class="floating-badge badge-top">
+              <span class="badge-icon">💖</span>
+              <div>
+                <strong>4.9 / 5.0 Rating</strong>
+                <small>2,400+ Happy Customers</small>
+              </div>
+            </div>
+            <div class="hero-main-card">
+              <div class="card-hero-header">
+                <span class="salon-status live">Available Now</span>
+                <span class="price-chip">From ₹299</span>
+              </div>
+              <div class="card-hero-img-placeholder">
+                <div class="service-preview-icon">💇‍♀️✨💅</div>
+                <div class="salon-preview-info">
+                  <h3>Aura Glow Salon & Spa</h3>
+                  <p>📍 Indiranagar, Bengaluru • Unisex</p>
+                </div>
+              </div>
+              <div class="card-hero-footer">
+                <div class="slot-pill">Next Slot: 11:30 AM Today</div>
+                <button class="btn btn-sm btn-primary" onclick="quickBook('Aura Glow Salon & Spa', 'Hair Styling')">Book Now</button>
+              </div>
+            </div>
+            <div class="floating-badge badge-bottom">
+              <span class="badge-icon">⚡</span>
+              <div>
+                <strong>Instant Confirmation</strong>
+                <small>Instant SMS & Demo Slot</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Popular Treatments</div>
+          <h2 class="section-title">Curated Beauty Services</h2>
+          <p class="section-subtitle">Choose from our most requested parlour treatments with transparent pricing and duration.</p>
+        </div>
+
+        <div class="services-grid" id="servicesGrid">
+          <!-- Populated by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Salons Discovery Section -->
+    <section class="salons-section" id="salons">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Top Rated Parlours</div>
+          <h2 class="section-title">Explore Verified Salons</h2>
+          <p class="section-subtitle">Find premium beauty hubs near you offering in-salon and doorstep services.</p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="discovery-toolbar">
+          <div class="search-box">
+            <span class="search-icon">🔎</span>
+            <input type="text" id="salonSearchFilter" placeholder="Filter by salon name, city (e.g. Bengaluru, Mumbai)...">
+          </div>
+          <div class="filter-pills" id="categoryFilters">
+            <button class="filter-pill active" data-category="all">All Salons</button>
+            <button class="filter-pill" data-category="women">Women Only</button>
+            <button class="filter-pill" data-category="unisex">Unisex</button>
+            <button class="filter-pill" data-category="home">🏠 Home Service</button>
+          </div>
+        </div>
+
+        <!-- Salons Grid -->
+        <div class="salons-grid" id="salonsGrid">
+          <!-- Populated by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Appointment Booking Section -->
+    <section class="booking-section" id="booking">
+      <div class="container">
+        <div class="booking-wrapper">
+          <div class="booking-info-panel">
+            <div class="section-tag">Fast & Simple</div>
+            <h2>Reserve Your Appointment</h2>
+            <p>Select your preferred parlour, service, and timing. You will receive an instant demo confirmation reference.</p>
+            
+            <div class="booking-steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div>
+                  <strong>Pick Salon & Service</strong>
+                  <p>Choose from top parlours or request a home visit specialist.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div>
+                  <strong>Select Date & Slot</strong>
+                  <p>Real-time slot lock prevents double booking.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div>
+                  <strong>Instant Confirmation</strong>
+                  <p>Zero wait time at the parlour or right at your home.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-alert-box">
+              <span class="alert-icon">ℹ️</span>
+              <div>
+                <strong>Hackathon Demo Note:</strong>
+                All bookings are simulated and stored safely in your browser's local storage for evaluation.
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-form-card">
+            <form id="appointmentForm" novalidate>
+              <h3 class="form-title">Appointment Booking Form</h3>
+
+              <!-- Service Mode -->
+              <div class="form-group">
+                <label class="form-label">Service Preference <span class="required">*</span></label>
+                <div class="mode-toggle-group">
+                  <label class="mode-option">
+                    <input type="radio" name="serviceMode" value="Salon Visit" checked id="modeSalon">
+                    <span class="mode-card">
+                      <span class="mode-icon">🏢</span>
+                      <span class="mode-text">
+                        <strong>Salon Visit</strong>
+                        <small>Visit the parlour</small>
+                      </span>
+                    </span>
+                  </label>
+                  <label class="mode-option">
+                    <input type="radio" name="serviceMode" value="Home Service" id="modeHome">
+                    <span class="mode-card">
+                      <span class="mode-icon">🏡</span>
+                      <span class="mode-text">
+                        <strong>Home Service</strong>
+                        <small>Stylist visits you</small>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Salon Select -->
+              <div class="form-group">
+                <label for="bookingSalon" class="form-label">Select Salon <span class="required">*</span></label>
+                <select id="bookingSalon" name="salonId" required>
+                  <option value="">-- Choose a Salon --</option>
+                  <!-- Populated by script.js -->
+                </select>
+                <span class="field-error" id="errorSalon"></span>
+              </div>
+
+              <!-- Service Select -->
+              <div class="form-group">
+                <label for="bookingService" class="form-label">Select Service <span class="required">*</span></label>
+                <select id="bookingService" name="serviceId" required>
+                  <option value="">-- Choose a Service --</option>
+                  <!-- Populated by script.js -->
+                </select>
+                <span class="field-error" id="errorService"></span>
+              </div>
+
+              <!-- Date Select -->
+              <div class="form-group">
+                <label for="bookingDate" class="form-label">Appointment Date <span class="required">*</span></label>
+                <input type="date" id="bookingDate" name="bookingDate" required>
+                <span class="field-hint">Past dates are disabled</span>
+                <span class="field-error" id="errorDate"></span>
+              </div>
+
+              <!-- Time Slot Select -->
+              <div class="form-group">
+                <label class="form-label">Available Time Slot <span class="required">*</span></label>
+                <div class="slots-container" id="slotsContainer">
+                  <div class="slots-hint-msg">Please select a salon and date to view slots</div>
+                </div>
+                <input type="hidden" id="selectedSlot" name="selectedSlot" required>
+                <span class="field-error" id="errorSlot"></span>
+              </div>
+
+              <!-- Customer Name & Phone -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="customerName" class="form-label">Your Full Name <span class="required">*</span></label>
+                  <input type="text" id="customerName" name="customerName" placeholder="e.g. Priya Sharma" required>
+                  <span class="field-error" id="errorName"></span>
+                </div>
+                <div class="form-group">
+                  <label for="customerPhone" class="form-label">Phone Number <span class="required">*</span></label>
+                  <input type="tel" id="customerPhone" name="customerPhone" placeholder="10-digit mobile number" maxlength="10" required>
+                  <span class="field-error" id="errorPhone"></span>
+                </div>
+              </div>
+
+              <!-- Address (conditional for Home Service) -->
+              <div class="form-group" id="homeAddressGroup" style="display: none;">
+                <label for="customerAddress" class="form-label">Home Address for Service <span class="required">*</span></label>
+                <textarea id="customerAddress" name="customerAddress" rows="2" placeholder="House/Flat No, Landmark, Street address..."></textarea>
+                <span class="field-error" id="errorAddress"></span>
+              </div>
+
+              <!-- Special Request -->
+              <div class="form-group">
+                <label for="specialNotes" class="form-label">Special Notes / Preferences (Optional)</label>
+                <input type="text" id="specialNotes" name="specialNotes" placeholder="e.g. Sensitive skin, specific hair product preference">
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBookingBtn">
+                Confirm & Reserve Slot ⚡
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Bookings Section -->
+    <section class="my-bookings-section" id="my-bookings">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Booking Management</div>
+          <h2 class="section-title">My Appointments</h2>
+          <p class="section-subtitle">Track, review, or cancel your active beauty slots.</p>
+        </div>
+
+        <div class="bookings-control-bar">
+          <div class="filter-pills" id="bookingStatusFilters">
+            <button class="filter-pill active" data-status="all">All Bookings</button>
+            <button class="filter-pill" data-status="Confirmed">Confirmed</button>
+            <button class="filter-pill" data-status="Cancelled">Cancelled</button>
+          </div>
+          <button class="btn btn-outline btn-sm" id="clearAllDemoBtn" title="Reset all demo data">
+            🔄 Reset Demo Bookings
+          </button>
+        </div>
+
+        <div class="bookings-list" id="bookingsList">
+          <!-- Populated by script.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-backdrop" id="confirmationModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-success-badge">🎉 Booking Confirmed!</div>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="confirmationDetails">
+        <!-- Injected by script.js -->
+      </div>
+      <div class="modal-footer">
+        <a href="#my-bookings" class="btn btn-primary" id="viewBookingsBtn">View in My Bookings</a>
+        <button type="button" class="btn btn-outline" id="bookAnotherBtn">Book Another</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <div class="brand-logo">
+          <div class="logo-icon">💄</div>
+          <div class="logo-text">
+            <span class="logo-name">Beauty<span class="highlight">Slot</span></span>
+            <span class="logo-tagline">Book Your Beauty. Skip the Queue.</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Empowering customers and salons with seamless appointment scheduling, home parlour services, and queue-free salon experiences.
+        </p>
+        <div class="demo-disclaimer-card">
+          ⚠️ <strong>Architecture & Production Note:</strong><br>
+          This is an MVP client-side demo utilizing browser localStorage. Production deployment requires a secure backend (Node/Python), cloud relational database (PostgreSQL), JWT authentication, payment gateway, and WebSocket/server-side lock for real-time concurrency.
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Core Services</h4>
+        <ul>
+          <li><a href="#services">Haircut & Styling</a></li>
+          <li><a href="#services">Herbal & Hydra Facials</a></li>
+          <li><a href="#services">Bridal & Event Makeup</a></li>
+          <li><a href="#services">Manicure & Pedicure</a></li>
+          <li><a href="#booking">Home Beauty Packages</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Explore Salons</h4>
+        <ul>
+          <li><a href="#salons">Bengaluru Parlours</a></li>
+          <li><a href="#salons">Mumbai Salons</a></li>
+          <li><a href="#salons">Delhi NCR Spas</a></li>
+          <li><a href="#salons">Hyderabad Hubs</a></li>
+          <li><a href="#booking">Book Verified Stylist</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Connect & Info</h4>
+        <ul>
+          <li><span class="footer-info-item">📍 Koramangala 4th Block, Bengaluru</span></li>
+          <li><span class="footer-info-item">📞 +91 98765 43210</span></li>
+          <li><span class="footer-info-item">✉️ support@beautyslot.demo</span></li>
+          <li><span class="footer-info-item">⏰ Support: 9:00 AM – 8:00 PM</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>© 2026 BeautySlot MVP — Built for Hackathon Excellence. All demo salon listings are illustrative.</p>
+        <p><a href="#hero">Back to top ↑</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
